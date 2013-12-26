@@ -1,9 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>Marlboro</groupId>
-	<artifactId>MarlboroBorn</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<groupId>com.expull</groupId>
+	<version>0.0.1</version>
 	<description>Data Control Process</description>
 	
 	<properties>
@@ -352,4 +351,5 @@
 			</plugin>
 		</plugins>
 	</build>
+	<artifactId>tfa</artifactId>
 </project>
