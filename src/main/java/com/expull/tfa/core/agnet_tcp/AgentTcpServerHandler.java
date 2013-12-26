@@ -19,6 +19,7 @@ import com.expull.tfa.util.JsonGenerator;
 import com.expull.tfa.util.JsonResponse;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
 import com.expull.tfa.util.QueuedLogger.QueuedTransactionLogs;
+import com.marlboro.core.model.manager.TempManager;
 
 /**
  * Agent TCP 서버를 핸들링 하는 클래스이다.
@@ -74,7 +75,7 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		
 		String pid = object.getString("pid");
 		String mac = object.getString("mac");
-		String lid = getLidByMac(mac);
+		String lid = TempManager.getInstance().getLidByMac(mac);
 		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
 		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS));
@@ -82,11 +83,6 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		QueuedLogger.push(Level.INFO, "[Agent TCP] Bind agent tcp with ChannelId : " + channelId);
 		return;
 
-	}
-
-	private String getLidByMac(String mac) {
-		// TODO Auto-generated method stub
-		return "";
 	}
 
 	@Override

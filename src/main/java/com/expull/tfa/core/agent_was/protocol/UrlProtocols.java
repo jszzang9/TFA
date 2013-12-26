@@ -17,6 +17,7 @@ import com.expull.tfa.core.binder.ChannelChannelIdBinder;
 import com.expull.tfa.util.JsonGenerator;
 import com.expull.tfa.util.JsonResponse;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
+import com.marlboro.core.model.manager.TempManager;
 
 /**
  * Agent WAS Server 에서 URL 프로토콜에 대한 비즈니스 핸들링을 하는 클래스이다.
@@ -58,8 +59,8 @@ public class UrlProtocols {
 			String uid = json.getString("uid");
 			String pcid = json.getString("pcid");
 			
-			String pid = getPidOf(uid);
-			String lid = getLidByPcid(pcid);
+			String pid = TempManager.getInstance().getPidOf(uid);
+			String lid = TempManager.getInstance().getLidByPcid(pcid);
 			
 			if(!hasConnectionFor(pid, lid))
 				throw new TFAException(RESULT_HAS_NOCONNECTION);
@@ -72,14 +73,6 @@ public class UrlProtocols {
 	private boolean hasConnectionFor(String pid, String lid) {
 		return ChannelChannelIdBinder.getInstance()
 				.isBind(ProtocolCommon.buildChannelIDFor(pid,lid));
-	}
-
-	private String getLidByPcid(String pcid) {
-		return "";
-	}
-
-	private String getPidOf(String uid) {
-		return "01030101710";
 	}
 
 	/**
