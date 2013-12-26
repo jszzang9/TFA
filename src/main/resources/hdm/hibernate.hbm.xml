@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
+<hibernate-mapping>
+	<class name="com.marlboro.core.model.dto.TestData" table="TESTDATA">
+		<id name="primaryKey" type="string">
+			<column name="ROW_NAME_KEY" />
+		</id>
+		<property name="marlboroId" column="MarlboroId" type="string" />
+		<property name="marlboroPw" column="MarlboroPw" type="string" />
+		<property name="marlboroNumber" column="MarlboroNumber" type="string" />
+	</class>
+</hibernate-mapping>

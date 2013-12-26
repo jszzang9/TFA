@@ -1,0 +1,63 @@
+[2013-12-18 23:09:21][INFO] (QueuedTransactionLog.java:75)  DCP starting...
+[2013-12-18 23:09:21][INFO] (QueuedTransactionLog.java:75)  DCP-Model is perparing...
+[2013-12-18 23:09:21][INFO] (QueuedTransactionLog.java:75)  DCP-Model is ready.
+[2013-12-18 23:09:21][INFO] (QueuedTransactionLog.java:75)  DCP-Server is preparing...
+[2013-12-18 23:09:21][FATAL] (QueuedTransactionLog.java:83)  It's maybe already used port : 3
+[2013-12-18 23:09:21][FATAL] (QueuedTransactionLog.java:83)  DCP-Server failed.
+[2013-12-18 23:09:21][FATAL] (QueuedTransactionLog.java:83)  DCP failed.
+[2013-12-18 23:11:27][INFO] (QueuedTransactionLog.java:75)  DCP starting...
+[2013-12-18 23:11:27][INFO] (QueuedTransactionLog.java:75)  DCP-Model is perparing...
+[2013-12-18 23:11:27][INFO] (QueuedTransactionLog.java:75)  DCP-Model is ready.
+[2013-12-18 23:11:27][INFO] (QueuedTransactionLog.java:75)  DCP-Server is preparing...
+[2013-12-18 23:11:27][FATAL] (QueuedTransactionLog.java:83)  It's maybe already used port : 3
+[2013-12-18 23:11:27][FATAL] (QueuedTransactionLog.java:83)  DCP-Server failed.
+[2013-12-18 23:11:27][FATAL] (QueuedTransactionLog.java:83)  DCP failed.
+[2013-12-18 23:13:37][INFO] (QueuedTransactionLog.java:75)  DCP starting...
+[2013-12-18 23:13:37][INFO] (QueuedTransactionLog.java:75)  DCP-Model is perparing...
+[2013-12-18 23:13:37][INFO] (QueuedTransactionLog.java:75)  DCP-Model is ready.
+[2013-12-18 23:13:37][INFO] (QueuedTransactionLog.java:75)  DCP-Server is preparing...
+[2013-12-18 23:13:37][FATAL] (QueuedTransactionLog.java:83)  It's maybe already used port : 3
+[2013-12-18 23:13:37][FATAL] (QueuedTransactionLog.java:83)  DCP-Server failed.
+[2013-12-18 23:13:37][FATAL] (QueuedTransactionLog.java:83)  DCP failed.
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP starting...
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP-Model is perparing...
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP-Model is ready.
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP-Server is preparing...
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP-Server Port : 3231
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP-Server is ready.
+[2013-12-18 23:14:57][INFO] (QueuedTransactionLog.java:75)  DCP is ready.
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:916488860] CONNECTED: /192.168.0.51:49247
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:916488860] DISCONNECTED: /192.168.0.51:49247
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] CONNECTED: /192.168.0.51:49248
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] ================== Incoming Info ================== 
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507]  > Connection : /192.168.0.51:49248 
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507]  > Raw Data : 3DUMMY000... 
+[2013-12-18 23:15:09][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] ================== Outgoing Info ================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507]  > Connection : /192.168.0.51:49248 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507]  > Telegram Number : DUMMY000 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507]  > Body Data : {"resultcode":"2","resultmessage":"invalid json format"} 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1545044507] DISCONNECTED: /192.168.0.51:49248
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] CONNECTED: /192.168.0.51:49249
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] ================== Incoming Info ================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083]  > Connection : /192.168.0.51:49249 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083]  > Raw Data : 3USER0001... 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] ================== Outgoing Info ================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083]  > Connection : /192.168.0.51:49249 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083]  > Telegram Number : USER0001 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083]  > Body Data : {"resultcode":"3","resultmessage":"unsupported telegram number"} 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:2051170083] DISCONNECTED: /192.168.0.51:49249
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] CONNECTED: /192.168.0.51:49250
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] ================== Incoming Info ================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144]  > Connection : /192.168.0.51:49250 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144]  > Raw Data : 2USER0001{} 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] ================== Outgoing Info ================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144]  > Connection : /192.168.0.51:49250 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144]  > Telegram Number : USER0001 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144]  > Body Data : {"resultcode":"3","resultmessage":"unsupported telegram number"} 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] =================================================== 
+[2013-12-18 23:15:10][INFO] (QueuedTransactionLog.java:75)  [channel:1250694144] DISCONNECTED: /192.168.0.51:49250

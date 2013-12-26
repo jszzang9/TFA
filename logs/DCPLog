@@ -1,0 +1,18 @@
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS App Server Port : 10501
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS App Server is ready.
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent TCP Server Port : 10401
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent TCP Server is ready.
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent WebSocket Server Port : 10405
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent WebSocket Server is ready.
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent WAS Server Port : 10481
+[2013-12-26 23:42:42][INFO] (QueuedTransactionLog.java:75)  MRS Agent WAS Server is ready.
+[2013-12-26 23:42:58][INFO] (QueuedTransactionLog.java:75)  [App] CONNECTED: /0:0:0:0:0:0:0:1%0:60257
+[2013-12-26 23:43:00][INFO] (QueuedTransactionLog.java:75)  [App] DISCONNECTED: /0:0:0:0:0:0:0:1%0:60257
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS App Server Port : 10501
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS App Server is ready.
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent TCP Server Port : 10401
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent TCP Server is ready.
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent WebSocket Server Port : 10405
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent WebSocket Server is ready.
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent WAS Server Port : 10481
+[2013-12-26 23:54:48][INFO] (QueuedTransactionLog.java:75)  MRS Agent WAS Server is ready.
