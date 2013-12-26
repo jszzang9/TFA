@@ -58,33 +58,42 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		buf.setIndex(0, bytes.length);
 
 		String msg = new String(bytes);
-//		QueuedLogger.push(Level.INFO, "[Agent TCP] incoming raw data : " + msg);
+		QueuedLogger.push(Level.INFO, "[Agent TCP] incoming raw data : " + msg);
 
-		String telegramNumber = msg.substring(0, ProtocolCommon.TELEGRAM_NUMBER_SIZE);
-		if (telegramNumber.equals("CMN00001") == false && telegramNumber.equals("CMN00002") == false) {
-			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_UNSUPPORTED_TELEGRAM_NUMBER, ProtocolCommon.RESULT_MESSAGE_UNSUPPORTED_TELEGRAM_NUMBER).toString());
-			return;
-		}
+//		String telegramNumber = msg.substring(0, ProtocolCommon.TELEGRAM_NUMBER_SIZE);
+//		if (telegramNumber.equals("CMN00001") == false && telegramNumber.equals("CMN00002") == false) {
+//			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_UNSUPPORTED_TELEGRAM_NUMBER, ProtocolCommon.RESULT_MESSAGE_UNSUPPORTED_TELEGRAM_NUMBER).toString());
+//			return;
+//		}
 
-		String bodyData = msg.substring(ProtocolCommon.TELEGRAM_NUMBER_SIZE);
+//		String bodyData = msg.substring(ProtocolCommon.TELEGRAM_NUMBER_SIZE);
+		String bodyData = msg;
 		if (JsonGenerator.mayBeJSON(bodyData) == false) {
 			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_INVALID_JSON_FORMAT, ProtocolCommon.RESULT_MESSAGE_INVALID_JSON_FORMAT).toString());
 			return;
 		}
 
 		JSONObject object = JSONObject.fromObject(bodyData);
-		if (object.containsKey("packetid") == false && object.containsKey("pcid") == false) {
+		if (object.containsKey("pid") == false && object.containsKey("mac") == false) {
 			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_MISSING_PARAMETER, ProtocolCommon.RESULT_MESSAGE_MISSING_PARAMETER).toString());
 			return;
 		}
 		
-		String channelId = (object.containsKey("pcid") ? object.getString("pcid") : object.getString("packetid"));
+		String pid = object.getString("pid");
+		String mac = object.getString("mac");
+		String lid = getLidByMac(mac);
+		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
-		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS, "telegramnumber", telegramNumber));
+		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS));
 
-//		QueuedLogger.push(Level.INFO, "[Agent TCP] Bind agent tcp with ChannelId : " + channelId);
+		QueuedLogger.push(Level.INFO, "[Agent TCP] Bind agent tcp with ChannelId : " + channelId);
 		return;
 
+	}
+
+	private String getLidByMac(String mac) {
+		// TODO Auto-generated method stub
+		return "";
 	}
 
 	@Override

@@ -24,6 +24,63 @@ import com.expull.tfa.util.QueuedLogger.QueuedLogger;
  * @author delta829
  */
 public class UrlProtocols {
+    private static final String RESULT_SUCCESS = "0000";
+	private static final String RESULT_UID_REQUIRED = "3100";
+	private static final String RESULT_PCID_REQUIRED = "3200";
+	private static final String RESULT_HAS_NOCONNECTION = "4000";
+
+	public static String makeBody(String ... keyvalues) {
+		Map<String, String> bodyMap = new HashMap<String, String>();
+		for (int i = 0; i < keyvalues.length; i += 2)
+			bodyMap.put(keyvalues[i], keyvalues[i + 1]);
+		
+		return JSONObject.fromObject(bodyMap).toString();
+	}
+    
+	class TFAException extends Exception {
+		private static final long serialVersionUID = -8445293431431833423L;
+		private final String code;
+		public TFAException(String code) {
+			this.code = code;
+		}
+		public String getCode() {return code;}
+	}
+	
+	public String auth(HttpRequest request, String content) {
+		JSONObject json = JSONObject
+				.fromObject(convertKeyValuePairToJSON(content));
+		
+		String resultCode = RESULT_SUCCESS;
+		try {
+			if(!json.has("uid")) throw new TFAException(RESULT_UID_REQUIRED);
+			if(!json.has("pcid")) throw new TFAException(RESULT_PCID_REQUIRED);
+
+			String uid = json.getString("uid");
+			String pcid = json.getString("pcid");
+			
+			String pid = getPidOf(uid);
+			String lid = getLidByPcid(pcid);
+			
+			if(!hasConnectionFor(pid, lid))
+				throw new TFAException(RESULT_HAS_NOCONNECTION);
+		} catch(TFAException e) {
+			resultCode = e.getCode();
+		}
+		return makeBody("result", resultCode, "request", json.toString());
+	}
+	
+	private boolean hasConnectionFor(String pid, String lid) {
+		return ChannelChannelIdBinder.getInstance()
+				.isBind(ProtocolCommon.buildChannelIDFor(pid,lid));
+	}
+
+	private String getLidByPcid(String pcid) {
+		return "";
+	}
+
+	private String getPidOf(String uid) {
+		return "01030101710";
+	}
 
 	/**
 	 * RESTful /common
@@ -586,6 +643,7 @@ public class UrlProtocols {
 	 * 
 	 * @return channelId 
 	 */
+	@Deprecated
 	private String extractChannelIdFromRequest(JSONObject json) {
 		return (json.containsKey("pcid") ? json.getString("pcid") : json.getString("packetid"));
 	}
