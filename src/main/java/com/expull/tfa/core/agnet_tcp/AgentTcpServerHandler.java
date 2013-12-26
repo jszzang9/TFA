@@ -60,13 +60,6 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		String msg = new String(bytes);
 		QueuedLogger.push(Level.INFO, "[Agent TCP] incoming raw data : " + msg);
 
-//		String telegramNumber = msg.substring(0, ProtocolCommon.TELEGRAM_NUMBER_SIZE);
-//		if (telegramNumber.equals("CMN00001") == false && telegramNumber.equals("CMN00002") == false) {
-//			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_UNSUPPORTED_TELEGRAM_NUMBER, ProtocolCommon.RESULT_MESSAGE_UNSUPPORTED_TELEGRAM_NUMBER).toString());
-//			return;
-//		}
-
-//		String bodyData = msg.substring(ProtocolCommon.TELEGRAM_NUMBER_SIZE);
 		String bodyData = msg;
 		if (JsonGenerator.mayBeJSON(bodyData) == false) {
 			writeToChannel(e.getChannel(), new JsonResponse(ProtocolCommon.RESULT_CODE_INVALID_JSON_FORMAT, ProtocolCommon.RESULT_MESSAGE_INVALID_JSON_FORMAT).toString());
