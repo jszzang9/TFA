@@ -74,7 +74,7 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		}
 		
 		String pid = object.getString("pid");
-		String mac = object.getString("mac");
+		String mac = object.getString("mac").toUpperCase();
 		String lid = TempManager.getInstance().getLidByMac(mac);
 		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
