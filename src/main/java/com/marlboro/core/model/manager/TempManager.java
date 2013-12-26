@@ -54,7 +54,7 @@ public class TempManager {
 			lidManager = new LidManager();
 			HibernateUtil.beginTransaction();
 			
-			lidManager.getLidData("expull");
+			lidData = lidManager.getLidData(mac);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
