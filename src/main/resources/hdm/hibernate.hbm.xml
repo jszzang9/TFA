@@ -14,9 +14,9 @@
 		<property name="lid" column="LID" type="string" />
 	</class>
 	<class name="com.marlboro.core.model.dto.LidData" table="TFA_LOCATION">
-		<id name="lid" type="string">
-			<column name="LID" />
+		<id name="mac" type="string">
+			<column name="MAC" />
 		</id>
-		<property name="mac" column="MAC" type="string" />
+		<property name="lid" column="LID" type="string" />
 	</class>
 </hibernate-mapping>
