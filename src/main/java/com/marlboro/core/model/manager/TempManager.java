@@ -11,12 +11,12 @@ public class TempManager {
 
 	public String getLidByPcid(String pcid) {
 		PcidManager pcidManager;
-		PcidData data = new PcidData();
+		PcidData data = null;
 		try {
 			pcidManager = new PcidManager();
 			HibernateUtil.beginTransaction();
 
-			pcidManager.getPcidData(pcid);
+			data = pcidManager.getPcidData(pcid);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
@@ -29,13 +29,13 @@ public class TempManager {
 
 	public String getPidOf(String uid) {
 		UserManager userManager;
-		UserData userData = new UserData();
+		UserData userData = null;
 		
 		try {
 			userManager = new UserManager();
 			HibernateUtil.beginTransaction();
 
-			userManager.getUserData(uid);
+			userData = userManager.getUserData(uid);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
@@ -62,6 +62,6 @@ public class TempManager {
 			HibernateUtil.rollBack();
 		}
 		
-		return lidData.getMac();
+		return lidData.getLid();
 	}
 }
