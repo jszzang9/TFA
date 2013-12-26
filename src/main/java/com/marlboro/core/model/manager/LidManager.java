@@ -6,11 +6,11 @@ import com.marlboro.core.model.HibernateUtil;
 import com.marlboro.core.model.dto.LidData;
 
 public class LidManager {
-	public LidData getLidData(String lid) {  
+	public LidData getLidData(String mac) {  
 		Session session = HibernateUtil.getCurrentSession();
 		HibernateUtil.beginTransaction();
 
-		return (LidData) session.get(LidData.class, lid);
+		return (LidData) session.get(LidData.class, mac);
 	}  
 
 
