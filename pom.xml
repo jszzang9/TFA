@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
-	<groupId>Marlboro</groupId>
-	<artifactId>MarlboroBorn</artifactId>
+	<groupId>com.expull.tfa</groupId>
+	<artifactId>tfa</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<description>Data Control Process</description>
 	
@@ -74,16 +74,6 @@
 			<version>1.45</version>
 		</dependency>
 		<dependency>
-			<groupId>junit</groupId>
-			<artifactId>junit</artifactId>
-			<version>4.11</version>
-		</dependency>
-		<dependency>
-			<groupId>log4j</groupId>
-			<artifactId>log4j</artifactId>
-			<version>1.2.16</version>
-		</dependency>
-		<dependency>
 			<groupId>net.sf.json-lib</groupId>
 			<artifactId>json-lib</artifactId>
 			<classifier>jdk15</classifier>
@@ -105,12 +95,6 @@
 			<version>1.2.16</version>
 		</dependency>
 		<dependency>
-			<groupId>net.sf.json-lib</groupId>
-			<artifactId>json-lib</artifactId>
-			<classifier>jdk15</classifier>
-			<version>2.4</version>
-		</dependency>
-		<dependency>
 			<groupId>io.netty</groupId>
 			<artifactId>netty</artifactId>
 			<version>3.6.3.Final</version>
@@ -124,7 +108,7 @@
 	</dependencies>
 	
 	<build>
-		<finalName>marlboro.dcp</finalName>
+		<finalName>tfa</finalName>
 		<pluginManagement>
 			<plugins>
 				<plugin>
@@ -186,7 +170,7 @@
 						<manifest>
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
-							<mainClass>com.marlboro.MarlboroBorn</mainClass>
+							<mainClass>com.expull.tfa.TFALauncher</mainClass>
 						</manifest>
 					</archive>
 				</configuration>
@@ -216,35 +200,35 @@
 				<version>1.2.1</version>
 				<executions>
 					<execution>
-						<id>start-dcp-integration-test</id>
+						<id>start-tfa-integration-test</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>com.integration_test.StartingDCP</mainClass>
+							<mainClass>com.integration_test.protocol.StartingTFA</mainClass>
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
 					<execution>
-						<id>wait-dcp-integration-test</id>
+						<id>wait-tfa-integration-test</id>
 						<phase>pre-integration-test</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>com.integration_test.WaitingDCP</mainClass>
+							<mainClass>com.integration_test.protocol.WaitingTFA</mainClass>
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
 					<execution>
-						<id>stop-dcp-for-integration-test</id>
+						<id>stop-tfa-for-integration-test</id>
 						<phase>post-integration-test</phase>
 						<goals>
 							<goal>java</goal>
 						</goals>
 						<configuration>
-							<mainClass>com.integration_test.StoppingDCP</mainClass>
+							<mainClass>com.integration_test.protocol.StoppingTFA</mainClass>
 							<classpathScope>test</classpathScope>
 						</configuration>
 					</execution>
@@ -264,12 +248,12 @@
 						<configuration>
 							<resources>
 								<resource>
-									<targetPath>${project.basedir}/../bins_for_integration_test/dcp</targetPath>
+									<targetPath>${project.basedir}/../bins_for_integration_test/tfa</targetPath>
 									<directory>${project.build.directory}</directory>
 									<include>*.jar</include>
 								</resource>
 								<resource>
-									<targetPath>${project.basedir}/../bins_for_integration_test/dcp/lib</targetPath>
+									<targetPath>${project.basedir}/../bins_for_integration_test/tfa/lib</targetPath>
 									<directory>${project.build.directory}/lib</directory>
 								</resource>
 							</resources>
@@ -294,7 +278,7 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>pack-dcp</id>
+						<id>pack-tfa</id>
 						<phase>install</phase>
 						<goals>
 							<goal>copy</goal>
@@ -302,7 +286,7 @@
 						<configuration>
 							<resources>
 								<resource>
-									<targetPath>${project.build.directory}/marlboro.dcp.zip</targetPath>
+									<targetPath>${project.build.directory}/tfa.zip</targetPath>
 									<directory>${project.build.directory}</directory>
 									<includes>
 										<include>lib</include>
@@ -315,18 +299,18 @@
 						</configuration>
 					</execution>
 					<execution>
-						<id>upload-dcp</id>
+						<id>upload-tfa</id>
 						<phase>install</phase>
 						<goals>
 							<goal>copy</goal>
 						</goals>
 						<configuration>
 							<resources>
-								<!-- <resource>
-									<targetPath>scp://root:comnsys&amp;&amp;&amp;!@54.238.138.147:/home/dcp</targetPath>
+								 <resource>
+									<targetPath>scp://root:expull01@54.199.137.92:/home/tfa</targetPath>
 									<directory>${project.build.directory}</directory>
-									<include>rowem.dcp.zip, install-dcp.sh</include>
-								</resource> -->
+									<include>tfa.zip, install-tfa.sh</include>
+								</resource>
 							</resources>
 						</configuration>
 					</execution>
@@ -337,17 +321,17 @@
 				<artifactId>sshexec-maven-plugin</artifactId>
 				<version>0.2.5</version>
 				<executions>
-					<!-- <execution>
-						<id>install-dcp-04</id>
+					 <execution>
+						<id>install-tfa-01</id>
 						<phase>install</phase>
 						<goals>
 							<goal>sshexec</goal>
 						</goals>
 						<configuration>
-							<location>scp://root:comnsys&amp;&amp;&amp;!@54.238.138.147:/home/dcp</location>
-							<command>chmod +x ./*.sh; ./install-dcp.sh</command>
+							<location>scp://root:expull01@54.199.137.92:/home/tfa</location>
+							<command>chmod +x ./*.sh; ./install-tfa.sh</command>
 						</configuration>
-					</execution> -->
+					</execution> 
 				</executions>
 			</plugin>
 		</plugins>

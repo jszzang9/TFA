@@ -1,19 +1,22 @@
 package com;
 
+import org.junit.Assert;
+import org.junit.Ignore;
 import org.junit.Test;
 
+import com.expull.tfa.core.protocol.HibernateUtil;
+import com.expull.tfa.core.protocol.model.manager.LidManager;
+import com.expull.tfa.core.protocol.model.manager.PcidManager;
+import com.expull.tfa.core.protocol.model.manager.UserManager;
+import com.expull.tfa.core.protocol.model.dto.LidData;
 import com.integration_test.protocol.ProtocolIT;
-import com.marlboro.core.model.HibernateUtil;
-import com.marlboro.core.model.manager.LidManager;
-import com.marlboro.core.model.manager.PcidManager;
-import com.marlboro.core.model.manager.UserManager;
 
 public class TestDataIT extends ProtocolIT{
 	private UserManager dataManager;
 	private PcidManager daPcidManager;
 	private LidManager lidManager;
 	
-	@Test
+	@Test @Ignore
 	public void updata() {
 		try {
 			dataManager = new UserManager();
@@ -28,7 +31,7 @@ public class TestDataIT extends ProtocolIT{
 		}
 	}
 	
-	@Test
+	@Test @Ignore
 	public void pcidGet() {
 		try {
 			daPcidManager = new PcidManager();
@@ -43,18 +46,21 @@ public class TestDataIT extends ProtocolIT{
 		}
 	}
 	
-	@Test
+	@Test @Ignore
 	public void lidGet() {
 		try {
 			lidManager = new LidManager();
 			HibernateUtil.beginTransaction();
 			
-			lidManager.getLidData("expull");
+			LidData d = lidManager.getLidData("0026662E777D");
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
+			
+			Assert.assertEquals("expull", d.getLid());
 		}
 		catch(Throwable ex) {
 			HibernateUtil.rollBack();
+			ex.printStackTrace();
 		}
 	}
 }

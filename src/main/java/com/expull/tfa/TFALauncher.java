@@ -58,8 +58,6 @@ public class TFALauncher {
 				agent_was_port = Integer.parseInt(options.get("w"));
 			if (options.containsKey("i"))
 				agent_websocket_port = Integer.parseInt(options.get("i"));
-			if (options.containsKey("d") && options.get("d").equals("ROWEM:DeveloperModeIntegrationTest"))
-				TFAConfiguration.load(true);
 		} catch (Exception e) {
 			showHelp = true;
 		}

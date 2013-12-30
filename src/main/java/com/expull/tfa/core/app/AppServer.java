@@ -43,12 +43,12 @@ public class AppServer {
 		try {
 			bootstrap.bind(new InetSocketAddress(port));
 
-			QueuedLogger.push(Level.INFO, "MRS App Server Port : " + port);
-			QueuedLogger.push(Level.INFO, "MRS App Server is ready.");
+			QueuedLogger.push(Level.INFO, "TFA App Server Port : " + port);
+			QueuedLogger.push(Level.INFO, "TFA App Server is ready.");
 		}
 		catch (ChannelException e) {
-			QueuedLogger.push(Level.FATAL, "MRS App Server : It's maybe already used port : " + port);
-			QueuedLogger.push(Level.FATAL, "MRS App Server failed.");
+			QueuedLogger.push(Level.FATAL, "TFA App Server : It's maybe already used port : " + port);
+			QueuedLogger.push(Level.FATAL, "TFA App Server failed.");
 			QueuedLogger.shutdown();
 		}
 	}
