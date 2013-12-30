@@ -1,1 +1,13 @@
 /target
+app/bin/AndroidManifest.xml
+app/bin/TFAKey.apk
+app/bin/classes.dex
+app/bin/dexedLibs/android-support-v4-5d2b8556a88df801f6499eed5e12708e.jar
+app/bin/dexedLibs/annotations-38d3c227448e8d90fd806a2a4873c617.jar
+app/bin/res/crunch/drawable-hdpi/ic_launcher.png
+app/bin/res/crunch/drawable-mdpi/ic_launcher.png
+app/bin/res/crunch/drawable-xhdpi/ic_launcher.png
+app/bin/res/crunch/drawable-xxhdpi/ic_launcher.png
+app/bin/resources.ap_
+logs/DCPLog
+tfa.tgz

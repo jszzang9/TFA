@@ -4,7 +4,7 @@
     <string name="app_name">TFA Key</string>
     <string name="action_settings">Settings</string>
     <string name="hello_world">Hello world!</string>
-    <string name="tfa_host">192.168.0.33</string>
+    <string name="tfa_host">ec000.expull.com</string>
     <string name="tfa_port">10401</string>
     <string name="msg_failed_to_connect_tfa">Failed to connect TFA</string>
     <string name="msg_failed_to_send_request">Failed to send request</string>
