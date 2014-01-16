@@ -78,6 +78,7 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		String lid = TempManager.getInstance().getLidByMac(mac);
 		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
+		//db add
 		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS));
 
 		QueuedLogger.push(Level.INFO, "[Agent TCP] Bind agent tcp with ChannelId : " + channelId);

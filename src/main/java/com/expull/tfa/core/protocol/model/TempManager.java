@@ -19,7 +19,7 @@ public class TempManager {
 		try {
 			pcidManager = new PcidManager();
 			HibernateUtil.beginTransaction();
-
+			
 			data = pcidManager.getPcidData(pcid);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
@@ -27,7 +27,7 @@ public class TempManager {
 		catch(Throwable ex) {
 			HibernateUtil.rollBack();
 		}
-
+		
 		return data.getLid();
 	}
 

@@ -104,6 +104,12 @@
 			<artifactId>webbit</artifactId>
 			<version>0.4.15</version>
 		</dependency>
+
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis</artifactId>
+			<version>3.2.3</version>
+		</dependency>
 	</dependencies>
 
 	<build>

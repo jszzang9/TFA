@@ -5,7 +5,7 @@
 <hibernate-configuration>
     <session-factory>
         <property name="connection.driver_class">org.gjt.mm.mysql.Driver</property>
-        <property name="connection.url">jdbc:mysql://52.199.133.151:3306/tfa</property>
+        <property name="connection.url">jdbc:mysql://54.199.137.92:3306/tfa</property>
         <property name="connection.username">tfa</property>
         <property name="connection.password">asdf</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>

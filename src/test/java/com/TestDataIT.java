@@ -9,6 +9,7 @@ import com.expull.tfa.core.protocol.model.manager.LidManager;
 import com.expull.tfa.core.protocol.model.manager.PcidManager;
 import com.expull.tfa.core.protocol.model.manager.UserManager;
 import com.expull.tfa.core.protocol.model.dto.LidData;
+import com.expull.tfa.core.protocol.model.dto.UserData;
 import com.integration_test.protocol.ProtocolIT;
 
 public class TestDataIT extends ProtocolIT{
@@ -16,13 +17,14 @@ public class TestDataIT extends ProtocolIT{
 	private PcidManager daPcidManager;
 	private LidManager lidManager;
 	
-	@Test @Ignore
+	@Test
 	public void updata() {
 		try {
 			dataManager = new UserManager();
 			HibernateUtil.beginTransaction();
+			UserData userData = new UserData("jszzang8", "8080");
+			dataManager.putUserData(userData);
 			
-			dataManager.getUserData("jszzang9");
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
