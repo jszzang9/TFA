@@ -1,68 +1,71 @@
-package com;
-
-import org.junit.Assert;
-import org.junit.Ignore;
-import org.junit.Test;
+package com.expull.tfa.core.protocol.model;
 
 import com.expull.tfa.core.protocol.HibernateUtil;
 import com.expull.tfa.core.protocol.model.manager.LidManager;
 import com.expull.tfa.core.protocol.model.manager.PcidManager;
 import com.expull.tfa.core.protocol.model.manager.UserManager;
 import com.expull.tfa.core.protocol.model.dto.LidData;
+import com.expull.tfa.core.protocol.model.dto.PcidData;
 import com.expull.tfa.core.protocol.model.dto.UserData;
-import com.integration_test.protocol.ProtocolIT;
 
-public class TestDataIT extends ProtocolIT{
-	private UserManager dataManager;
-	private PcidManager daPcidManager;
-	private LidManager lidManager;
-	
-	@Test
-	public void updata() {
+
+public class TempManager {
+	private static TempManager singleton = new TempManager();
+	public static TempManager getInstance() { return singleton ; }
+
+	public String getLidByPcid(String pcid) {
+		PcidManager pcidManager;
+		PcidData data = null;
 		try {
-			dataManager = new UserManager();
+			pcidManager = new PcidManager();
 			HibernateUtil.beginTransaction();
-			UserData userData = new UserData("jszzang8", "8080");
-			dataManager.putUserData(userData);
 			
+			data = pcidManager.getPcidData(pcid);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
 		catch(Throwable ex) {
 			HibernateUtil.rollBack();
 		}
+		
+		return data.getLid();
 	}
-	
-	@Test @Ignore
-	public void pcidGet() {
+
+	public String getPidOf(String uid) {
+		UserManager userManager;
+		UserData userData = null;
+		
 		try {
-			daPcidManager = new PcidManager();
+			userManager = new UserManager();
 			HibernateUtil.beginTransaction();
-			
-			daPcidManager.getPcidData("pc01");
+
+			userData = userManager.getUserData(uid);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
 		catch(Throwable ex) {
 			HibernateUtil.rollBack();
+
 		}
+		return userData.getPid();
 	}
 	
-	@Test @Ignore
-	public void lidGet() {
+	public String getLidByMac(String mac) {
+		LidManager lidManager;
+		LidData lidData = new LidData();
+		
 		try {
 			lidManager = new LidManager();
 			HibernateUtil.beginTransaction();
 			
-			LidData d = lidManager.getLidData("0026662E777D");
+			lidData = lidManager.getLidData(mac);
 			HibernateUtil.commit();
 			HibernateUtil.closeSession();
-			
-			Assert.assertEquals("expull", d.getLid());
 		}
 		catch(Throwable ex) {
 			HibernateUtil.rollBack();
-			ex.printStackTrace();
 		}
+		
+		return lidData.getLid();
 	}
 }

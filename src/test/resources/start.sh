@@ -1,3 +1,3 @@
 #! /bin/sh
 
-$* java -jar target/marlboro.dcp.jar > /dev/null 2>&1 &
+$* java -jar target/tfa.jar > /dev/null 2>&1 &

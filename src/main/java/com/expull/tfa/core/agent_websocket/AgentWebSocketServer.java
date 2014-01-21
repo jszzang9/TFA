@@ -29,11 +29,11 @@ public class AgentWebSocketServer {
 	        webServer.add(new HttpToWebSocketHandler(new WebSocketHandler(this))).connectionExceptionHandler(new PrintStackTraceExceptionHandler());
 	        try {
 				webServer.start().get();
-				QueuedLogger.push(Level.INFO, "MRS Agent WebSocket Server Port : " + port);
-				QueuedLogger.push(Level.INFO, "MRS Agent WebSocket Server is ready.");
+				QueuedLogger.push(Level.INFO, "TFA Agent WebSocket Server Port : " + port);
+				QueuedLogger.push(Level.INFO, "TFA Agent WebSocket Server is ready.");
 			} catch (Throwable e) {
-				QueuedLogger.push(Level.FATAL, "MRS Agent WebSocket Server : It's maybe already used port : " + port);
-				QueuedLogger.push(Level.FATAL, "MRS Agent WebSocket Server failed.");
+				QueuedLogger.push(Level.FATAL, "TFA Agent WebSocket Server : It's maybe already used port : " + port);
+				QueuedLogger.push(Level.FATAL, "TFA Agent WebSocket Server failed.");
 				QueuedLogger.shutdown();
 			} 
 	}

@@ -57,12 +57,12 @@ public class AgentWasServer {
 		try {
 			bootstrap.bind(new InetSocketAddress(port));
 
-			QueuedLogger.push(Level.INFO, "MRS Agent WAS Server Port : " + port);
-			QueuedLogger.push(Level.INFO, "MRS Agent WAS Server is ready.");
+			QueuedLogger.push(Level.INFO, "TFA Agent WAS Server Port : " + port);
+			QueuedLogger.push(Level.INFO, "TFA Agent WAS Server is ready.");
 		}
 		catch (ChannelException e) {
-			QueuedLogger.push(Level.FATAL, "MRS Agent WAS Server : It's maybe already used port : " + port);
-			QueuedLogger.push(Level.FATAL, "MRS Agent WAS Server failed.");
+			QueuedLogger.push(Level.FATAL, "TFA Agent WAS Server : It's maybe already used port : " + port);
+			QueuedLogger.push(Level.FATAL, "TFA Agent WAS Server failed.");
 			QueuedLogger.shutdown();
 		}
 	}

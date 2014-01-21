@@ -15,11 +15,11 @@ import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.expull.tfa.common.ProtocolCommon;
 import com.expull.tfa.core.binder.ChannelChannelIdBinder;
+import com.expull.tfa.core.protocol.model.TempManager;
 import com.expull.tfa.util.JsonGenerator;
 import com.expull.tfa.util.JsonResponse;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
 import com.expull.tfa.util.QueuedLogger.QueuedTransactionLogs;
-import com.marlboro.core.model.manager.TempManager;
 
 /**
  * Agent TCP 서버를 핸들링 하는 클래스이다.
@@ -77,6 +77,7 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		String lid = TempManager.getInstance().getLidByMac(mac);
 		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
+		//db add
 		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS));
 
 		QueuedLogger.push(Level.INFO, "[Agent TCP] Bind agent tcp with ChannelId : " + channelId);
