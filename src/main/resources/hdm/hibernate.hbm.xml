@@ -1,19 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-	<class name="com.expull.tfa.protocol.model.dto.UserData" table="USER_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.UserData" table="USER_TABLE">
 		<id name="uid" type="string">
 			<column name="UID" />
 		</id>
 		<property name="pid" column="PID" type="string" />
 	</class>
-	<class name="com.expull.tfa.protocol.model.dto.PcidData" table="PCID_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.PcidData" table="PCID_TABLE">
 		<id name="pcid" type="string">
 			<column name="PCID" />
 		</id>
 		<property name="lid" column="LID" type="string" />
 	</class>
-	<class name="com.expull.tfa.protocol.model.dto.LidData" table="LOCATION_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.LidData" table="LOCATION_TABLE">
 		<id name="mac" type="string">
 			<column name="MAC" />
 		</id>

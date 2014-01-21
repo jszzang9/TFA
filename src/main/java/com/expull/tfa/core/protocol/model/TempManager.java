@@ -1,12 +1,12 @@
 package com.expull.tfa.core.protocol.model;
 
 import com.expull.tfa.core.protocol.HibernateUtil;
-import com.expull.tfa.core.protocol.model.manager.LidManager;
-import com.expull.tfa.core.protocol.model.manager.PcidManager;
-import com.expull.tfa.core.protocol.model.manager.UserManager;
 import com.expull.tfa.core.protocol.model.dto.LidData;
 import com.expull.tfa.core.protocol.model.dto.PcidData;
 import com.expull.tfa.core.protocol.model.dto.UserData;
+import com.expull.tfa.core.protocol.model.manager.LidManager;
+import com.expull.tfa.core.protocol.model.manager.PcidManager;
+import com.expull.tfa.core.protocol.model.manager.UserManager;
 
 
 public class TempManager {
@@ -63,6 +63,7 @@ public class TempManager {
 			HibernateUtil.closeSession();
 		}
 		catch(Throwable ex) {
+			ex.printStackTrace();
 			HibernateUtil.rollBack();
 		}
 		
