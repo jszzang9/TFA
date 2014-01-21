@@ -27,7 +27,6 @@ import com.marlboro.core.model.manager.TempManager;
  * @author delta829
  */
 public class AgentTcpServerHandler extends SimpleChannelHandler {
-
 	@Override
 	public void channelConnected(ChannelHandlerContext ctx, ChannelStateEvent e) throws Exception {
 		super.channelConnected(ctx, e);

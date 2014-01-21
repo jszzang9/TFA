@@ -1,5 +1,6 @@
 package com.expull.tfa.core.binder;
 
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -104,5 +105,9 @@ public class ChannelChannelIdBinder {
 	 */
 	public boolean isBind(Channel channel) {
 		return channelMap.containsKey(channel);
+	}
+	
+	public Collection<Channel> allChannels() {
+		return channelIdMap.values();
 	}
 }

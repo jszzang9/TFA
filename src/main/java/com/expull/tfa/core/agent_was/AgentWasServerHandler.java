@@ -74,6 +74,8 @@ public class AgentWasServerHandler extends SimpleChannelUpstreamHandler {
 				String response = "";
 				try {
 					response = (String)urlProtocols.getClass().getMethod(methodName, new Class[] {HttpRequest.class, String.class}).invoke(urlProtocols, request, contentBody);
+				} catch(NoSuchMethodException t) {
+					
 				} catch(Throwable t) {
 					t.printStackTrace();
 				}

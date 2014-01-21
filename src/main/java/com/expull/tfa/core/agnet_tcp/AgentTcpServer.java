@@ -20,7 +20,8 @@ import com.expull.tfa.util.QueuedLogger.QueuedLogger;
  */
 public class AgentTcpServer {
 	private final int port;
-
+	TCPWatchDog watchdog;
+	
 	/**
 	 * {@link AgentTcpServer} 생성자.
 	 * 
@@ -28,6 +29,7 @@ public class AgentTcpServer {
 	 */
 	public AgentTcpServer(int port) {
 		this.port = port;
+		watchdog = new TCPWatchDog();
 	}
 
 	/**
@@ -40,6 +42,7 @@ public class AgentTcpServer {
 						Executors.newCachedThreadPool()));
 
 		bootstrap.setPipelineFactory(new ChannelPipelineFactory() {
+			@Override
 			public ChannelPipeline getPipeline() {
 				return Channels.pipeline(new AgentTcpServerHandler());
 			}
@@ -58,5 +61,7 @@ public class AgentTcpServer {
 			QueuedLogger.push(Level.FATAL, "MRS Agent TCP Server failed.");
 			QueuedLogger.shutdown();
 		}
+		
+		watchdog.start();
 	}
 }
