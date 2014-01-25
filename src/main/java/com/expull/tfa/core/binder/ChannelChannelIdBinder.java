@@ -60,11 +60,9 @@ public class ChannelChannelIdBinder {
 	 * @param channelId Packet ID.
 	 */
 	public void unbind(String channelId) {
+		if(!channelIdMap.containsKey(channelId)) return;
 		Channel channel = channelIdMap.get(channelId);
-		if (channel == null)
-			return;
-		
-		channelMap.remove(channel);
+		if (channel != null) channelMap.remove(channel);
 		channelIdMap.remove(channelId);
 	}
 	
@@ -109,5 +107,12 @@ public class ChannelChannelIdBinder {
 	
 	public Collection<Channel> allChannels() {
 		return channelIdMap.values();
+	}
+
+	public String findChannelIdStartsWith(String pid) {
+		for(String key : channelIdMap.keySet()) {
+			if(key.startsWith(pid)) return key;
+		}
+		return null;
 	}
 }

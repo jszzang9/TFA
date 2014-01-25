@@ -50,6 +50,20 @@
         android:text="Regist"
         android:onClick="onClickRegist" />
 
+    <Button
+        android:id="@+id/Button02"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickBluetooth"
+        android:text="USE BT" />
+
+    <Button
+        android:id="@+id/Button01"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:onClick="onClickExpire"
+        android:text="Expire" />
+
     <TextView
         android:id="@+id/textStatus"
         android:layout_width="349dp"

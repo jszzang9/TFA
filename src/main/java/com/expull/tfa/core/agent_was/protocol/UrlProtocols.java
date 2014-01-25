@@ -51,6 +51,13 @@ public class UrlProtocols {
 		SessionController.getInstance().bindPhone(null, json.getString("pid"), json.getString("mac"));
 		return makeBody("result", "0000"," request", json.toString());
 	}
+	
+	public String expireSession(HttpRequest request, String content) {
+		JSONObject json = JSONObject
+				.fromObject(convertKeyValuePairToJSON(content));
+		SessionController.getInstance().expireSession(json.getString("pid"));
+		return makeBody("result", "0000"," request", json.toString());
+	}
 
 	/**
 	 * Key/Value 쌍으로 된 내용을 Json 형식으로 변환한다.
