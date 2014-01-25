@@ -62,6 +62,6 @@ public class AgentTcpServer {
 			QueuedLogger.shutdown();
 		}
 		
-		watchdog.start();
+//		watchdog.start();
 	}
 }

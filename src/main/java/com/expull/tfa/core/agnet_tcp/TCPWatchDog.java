@@ -26,6 +26,7 @@ public class TCPWatchDog extends Thread {
 		while(keepGoing) {
 			Collection<Channel> channels = new ArrayList<Channel>(binder.allChannels());
 			for(Channel c : channels) {
+				if(c == null) continue;
 				if(!c.isConnected() || !c.isOpen() || !c.isReadable() || !c.isWritable()) {
 					binder.unbind(c);
 					continue;

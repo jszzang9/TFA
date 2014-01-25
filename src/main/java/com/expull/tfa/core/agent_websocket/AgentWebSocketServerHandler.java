@@ -8,7 +8,7 @@ import org.jboss.netty.channel.Channel;
 import org.webbitserver.BaseWebSocketHandler;
 import org.webbitserver.WebSocketConnection;
 
-import com.expull.tfa.core.binder.ChannelChannelIdBinder;
+import com.expull.tfa.control.SessionController;
 import com.expull.tfa.net.WebSocketConnectionChannel;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
 
@@ -35,7 +35,7 @@ public class AgentWebSocketServerHandler {
 				waitingForPcId=false;
 				String pcId = msg;
 				Channel ch = new WebSocketConnectionChannel(connection);
-				ChannelChannelIdBinder.getInstance().bind(ch, pcId);
+				SessionController.getInstance().bindWebSocketChannel(ch, pcId);
 				channelConnectionMap.put(connection, ch);
 			}
 		}
@@ -50,7 +50,7 @@ public class AgentWebSocketServerHandler {
 			QueuedLogger.push(Level.INFO, "onClose : "+connection);
 			if (!channelConnectionMap.containsKey(connection)) return;
 			Channel ch = channelConnectionMap.get(connection);
-			ChannelChannelIdBinder.getInstance().unbind(ch);
+			SessionController.getInstance().unbindWebSocketChannel(ch);
 			channelConnectionMap.remove(connection);
 			ch.close();
 		}

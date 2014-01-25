@@ -14,8 +14,8 @@ import org.jboss.netty.channel.MessageEvent;
 import org.jboss.netty.channel.SimpleChannelHandler;
 
 import com.expull.tfa.common.ProtocolCommon;
+import com.expull.tfa.control.SessionController;
 import com.expull.tfa.core.binder.ChannelChannelIdBinder;
-import com.expull.tfa.core.protocol.model.TempManager;
 import com.expull.tfa.util.JsonGenerator;
 import com.expull.tfa.util.JsonResponse;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
@@ -74,9 +74,8 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 		
 		String pid = object.getString("pid");
 		String mac = object.getString("mac").toUpperCase();
-		String lid = TempManager.getInstance().getLidByMac(mac);
-		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
-		ChannelChannelIdBinder.getInstance().bind(e.getChannel(), channelId);
+		String channelId = SessionController.getInstance().bindPhone(e.getChannel(), pid, mac);
+		
 		//db add
 		writeToChannel(e.getChannel(), JsonGenerator.make("resultcode", ProtocolCommon.RESULT_CODE_SUCCESS, "resultmessage", ProtocolCommon.RESULT_MESSAGE_SUCCESS));
 

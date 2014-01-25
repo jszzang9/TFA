@@ -11,9 +11,7 @@ import org.apache.log4j.Level;
 import org.jboss.netty.handler.codec.http.HttpRequest;
 import org.jboss.netty.handler.codec.http.QueryStringDecoder;
 
-import com.expull.tfa.common.ProtocolCommon;
-import com.expull.tfa.core.binder.ChannelChannelIdBinder;
-import com.expull.tfa.core.protocol.model.TempManager;
+import com.expull.tfa.control.SessionController;
 import com.expull.tfa.util.JsonGenerator;
 import com.expull.tfa.util.QueuedLogger.QueuedLogger;
 
@@ -23,11 +21,6 @@ import com.expull.tfa.util.QueuedLogger.QueuedLogger;
  * @author delta829
  */
 public class UrlProtocols {
-    private static final String RESULT_SUCCESS = "0000";
-	private static final String RESULT_UID_REQUIRED = "3100";
-	private static final String RESULT_PCID_REQUIRED = "3200";
-	private static final String RESULT_HAS_NOCONNECTION = "4000";
-
 	public static String makeBody(String ... keyvalues) {
 		Map<String, String> bodyMap = new HashMap<String, String>();
 		for (int i = 0; i < keyvalues.length; i += 2)
@@ -36,41 +29,27 @@ public class UrlProtocols {
 		return JSONObject.fromObject(bodyMap).toString();
 	}
     
-	class TFAException extends Exception {
-		private static final long serialVersionUID = -8445293431431833423L;
-		private final String code;
-		public TFAException(String code) {
-			this.code = code;
-		}
-		public String getCode() {return code;}
+
+	public String framecontent(HttpRequest request, String content) {
+		return "<html>"                                                                                                
+				+"<head> "
+				+"<script src=\"http://code.jquery.com/jquery.min.js\"></script> "
+				+ "<script src=\"http://ec000.expull.com/sites/tfa/js/frame-ws.js\"></script> </head>"               
+				+"<body> </body></html>";
 	}
 	
 	public String auth(HttpRequest request, String content) {
 		JSONObject json = JSONObject
 				.fromObject(convertKeyValuePairToJSON(content));
-		
-		String resultCode = RESULT_SUCCESS;
-		try {
-			if(!json.has("uid")) throw new TFAException(RESULT_UID_REQUIRED);
-			if(!json.has("pcid")) throw new TFAException(RESULT_PCID_REQUIRED);
-
-			String uid = json.getString("uid");
-			String pcid = json.getString("pcid");
-			
-			String pid = TempManager.getInstance().getPidOf(uid);
-			String lid = TempManager.getInstance().getLidByPcid(pcid);
-			
-			if(!hasConnectionFor(pid, lid))
-				throw new TFAException(RESULT_HAS_NOCONNECTION);
-		} catch(TFAException e) {
-			resultCode = e.getCode();
-		}
-		return makeBody("result", resultCode, "request", json.toString());
+		return makeBody("result", SessionController.getInstance().findConnection(json),
+				"request", json.toString());
 	}
-	
-	private boolean hasConnectionFor(String pid, String lid) {
-		return ChannelChannelIdBinder.getInstance()
-				.isBind(ProtocolCommon.buildChannelIDFor(pid,lid));
+
+	public String bindphone(HttpRequest request, String content) {
+		JSONObject json = JSONObject
+				.fromObject(convertKeyValuePairToJSON(content));
+		SessionController.getInstance().bindPhone(null, json.getString("pid"), json.getString("mac"));
+		return makeBody("result", "0000"," request", json.toString());
 	}
 
 	/**

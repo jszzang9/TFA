@@ -67,6 +67,24 @@ public class TempManager {
 			HibernateUtil.rollBack();
 		}
 		
-		return lidData.getLid();
+		return lidData != null ? lidData.getLid() : "";
+	}
+
+	public String[] getPcidsFor(String lid) {
+		PcidManager pcidManager;
+		String[] pcids = null;
+		try {
+			pcidManager = new PcidManager();
+			HibernateUtil.beginTransaction();
+			
+			pcids= pcidManager.getPcidsFor(lid);
+			HibernateUtil.commit();
+			HibernateUtil.closeSession();
+		}
+		catch(Throwable ex) {
+			HibernateUtil.rollBack();
+		}
+		
+		return pcids;
 	}
 }

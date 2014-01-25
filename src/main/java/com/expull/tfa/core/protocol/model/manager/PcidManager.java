@@ -1,6 +1,10 @@
 package com.expull.tfa.core.protocol.model.manager;
 
+import java.util.List;
+
+import org.hibernate.Criteria;
 import org.hibernate.Session;
+import org.hibernate.criterion.Restrictions;
 
 import com.expull.tfa.core.protocol.HibernateUtil;
 import com.expull.tfa.core.protocol.model.dto.PcidData;
@@ -13,6 +17,22 @@ public class PcidManager {
 
 		return (PcidData) session.get(PcidData.class, pcid);
 	}  
+
+	public String[] getPcidsFor(String lid) {
+		Session session = HibernateUtil.getCurrentSession();
+		HibernateUtil.beginTransaction();
+
+		Criteria cr = session.createCriteria(PcidData.class);
+		cr.add(Restrictions.eq("lid", lid));
+		List list = cr.list();
+		
+		String[] result = new String[list.size()];
+		for(int i=0;i<result.length;i++) {
+			result[i] = ((PcidData)list.get(i)).getPcid();
+		}
+
+		return result;
+	}
 
 
 	public PcidData putPcidData(PcidData pcidData) {
