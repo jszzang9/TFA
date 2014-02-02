@@ -56,15 +56,11 @@ public class TempManager {
 		
 		try {
 			lidManager = new LidManager();
-			HibernateUtil.beginTransaction();
-			
 			lidData = lidManager.getLidData(mac);
-			HibernateUtil.commit();
 			HibernateUtil.closeSession();
 		}
 		catch(Throwable ex) {
 			ex.printStackTrace();
-			HibernateUtil.rollBack();
 		}
 		
 		return lidData != null ? lidData.getLid() : "";

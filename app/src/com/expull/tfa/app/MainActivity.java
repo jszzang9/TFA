@@ -8,14 +8,16 @@ import java.io.Reader;
 import java.net.Socket;
 import java.net.URL;
 import java.net.URLConnection;
-import java.util.UUID;
+import java.util.ArrayList;
+import java.util.Set;
 
 import android.app.Activity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothSocket;
+import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.net.wifi.WifiInfo;
 import android.net.wifi.WifiManager;
 import android.os.Bundle;
@@ -34,12 +36,20 @@ public class MainActivity extends Activity {
 	private String mac;
 	private final Handler handler = new Handler();
 	private final int REQUEST_ENABLE_BT = 3;
-	private BluetoothAdapter mBTAdapter;
+	private BluetoothAdapter mBluetoothAdapter;
+	private final ArrayList<String> mArrayAdapter = new ArrayList<String>();
 	
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_main);
+		
+		initBTReceiver();
+	}
+
+	private void initBTReceiver() {
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
 	}
 
 	@Override
@@ -67,16 +77,39 @@ public class MainActivity extends Activity {
 	}
 	
 	private void pairBluetooth() {
-		mBTAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBTAdapter == null) {
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null) {
 			postToast("failed to initialize BT");
 		}
-		if (!mBTAdapter.isEnabled()) {
+		if (!mBluetoothAdapter.isEnabled()) {
 		    Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
 		    startActivityForResult(enableBtIntent, REQUEST_ENABLE_BT ) ;
 		    return;
-		}		
+		}
+		
+		Set<BluetoothDevice> pairedDevices = mBluetoothAdapter.getBondedDevices();
+		if (pairedDevices.size() > 0) {
+		    for (BluetoothDevice device : pairedDevices) {
+		        mArrayAdapter .add(device.getName() + "\n" + device.getAddress());
+		    }
+		}
+		
+		mBluetoothAdapter.startDiscovery(); 
 	}
+
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+	    @Override
+		public void onReceive(Context context, Intent intent) {
+	        String action = intent.getAction();
+	        // When discovery finds a device
+	        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+	            // Get the BluetoothDevice object from the Intent
+	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+	            // Add the name and address to an array adapter to show in a ListView
+	            mArrayAdapter.add(device.getName() + "\n" + device.getAddress());
+	        }
+	    }
+	};
 
 	public void onClickExpire(View v) {
 		expireSession();
@@ -208,51 +241,5 @@ public class MainActivity extends Activity {
 			if(len < buf.length) break;
 		}
 		return result.toString();
-	}
-	
-	private class ConnectThread extends Thread {
-	    private final BluetoothSocket mmSocket;
-	    private final BluetoothDevice mmDevice;
-	    private final UUID MY_UUID = UUID.fromString("e9b6c280-85cf-11e3-baa7-0800200c9a66");
-	    public ConnectThread(BluetoothDevice device) {
-	        BluetoothSocket tmp = null;
-	        mmDevice = device;
-	        // Get a BluetoothSocket to connect with the given BluetoothDevice
-	        try {
-	            // MY_UUID is the app's UUID string, also used by the server code
-	            tmp = device.createRfcommSocketToServiceRecord(MY_UUID);
-	        } catch (IOException e) { }
-	        mmSocket = tmp;
-	    }
-
-	    @Override
-		public void run() {
-	        // Cancel discovery because it will slow down the connection
-	        mBTAdapter.cancelDiscovery();
-	        try {
-	            // Connect the device through the socket. This will block
-	            // until it succeeds or throws an exception
-	            mmSocket.connect();
-	        } catch (IOException connectException) {
-	            // Unable to connect; close the socket and get out
-	            try {
-	                mmSocket.close();
-	            } catch (IOException closeException) { }
-	            return;
-	        }
-	        // Do work to manage the connection (in a separate thread)
-	        manageConnectedSocket(mmSocket);
-	    }
-
-	    private void manageConnectedSocket(BluetoothSocket mmSocket) {
-			
-		}
-
-		/** Will cancel an in-progress connection, and close the socket */
-	    public void cancel() {
-	        try {
-	            mmSocket.close();
-	        } catch (IOException e) { }
-	    }
 	}
 }

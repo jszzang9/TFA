@@ -11,3 +11,11 @@ app/bin/res/crunch/drawable-xxhdpi/ic_launcher.png
 app/bin/resources.ap_
 logs/DCPLog
 tfa.tgz
+app/bin/jarlist.cache
+logs/DCPLog_2013-12-27.log
+logs/DCPLog_2013-12-30.log
+logs/DCPLog_2014-01-10.log
+logs/TFAlog
+logs/TFAlog_2014-01-21.log
+logs/TFAlog_2014-01-25.log
+logs/TFAlog_2014-01-26.log

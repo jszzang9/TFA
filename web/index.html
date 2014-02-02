@@ -1,0 +1,36 @@
+<html lang="en">
+  <head>
+    <title>TFA Sample</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/signin.css" rel="stylesheet">
+    <link href="css/tfa.css" rel="stylesheet">
+	<script src="http://code.jquery.com/jquery.min.js"></script>
+	<script src="js/tfa.js"></script>
+	<script>
+$(document).ready(function() {
+	tfa.sessionRequired = false;
+});
+	</script>
+  </head>
+
+  <body>
+
+    <div class="container">
+
+      <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">Please sign in</h2>
+        <input type="text" class="form-control" placeholder="Email address" required autofocus id="txtUID">
+        <input type="password" id="txtPW" class="form-control" placeholder="Password" required>
+        <input type="button" class="btn btn-lg btn-primary btn-block" onClick="tfa.requestAuth()" value="Sign in"/>
+      </form>
+
+    </div> <!-- /container -->
+    <div class="container" id="RegistPCArea">
+      <form class="form-signin" role="form">
+        <h2 class="form-signin-heading">PC ID</h2>
+        <input type="text" class="form-control" placeholder="PCID" required autofocus id="txtPCID">
+        <button class="btn btn-lg btn-primary btn-block" onClick="tfa.updatePCID()">REGIST</button>
+      </form>
+    </div>
+  </body>
+</html>

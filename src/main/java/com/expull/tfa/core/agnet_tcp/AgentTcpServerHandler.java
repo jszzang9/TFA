@@ -40,11 +40,11 @@ public class AgentTcpServerHandler extends SimpleChannelHandler {
 
 		QueuedTransactionLogs logs = new QueuedTransactionLogs();
 		logs.add(Level.INFO, "[Agent TCP] DISCONNECTED: " + e.getChannel().getRemoteAddress());
+		String channelId = ChannelChannelIdBinder.getInstance().getChannelIdByChannel(e.getChannel());
 		if (ChannelChannelIdBinder.getInstance().isBind(e.getChannel()))
-			logs.add(Level.INFO, "[Agent TCP] Unbind agent tcp with channelId: " + ChannelChannelIdBinder.getInstance().getChannelIdByChannel(e.getChannel()));
+			logs.add(Level.INFO, "[Agent TCP] Unbind agent tcp with channelId: " + channelId);
 		QueuedLogger.push(logs);
-
-		ChannelChannelIdBinder.getInstance().unbind(e.getChannel());
+		SessionController.getInstance().unbindLocation(channelId);
 	}
 
 	@Override
