@@ -60,6 +60,7 @@ public class TestDataIT{
 			Assert.assertEquals("expull", d.getLid());
 		}
 		catch(Throwable ex) {
+			
 			HibernateUtil.rollBack();
 			ex.printStackTrace();
 		}
