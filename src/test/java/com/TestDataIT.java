@@ -5,14 +5,13 @@ import org.junit.Ignore;
 import org.junit.Test;
 
 import com.expull.tfa.core.protocol.HibernateUtil;
+import com.expull.tfa.core.protocol.model.dto.LidData;
+import com.expull.tfa.core.protocol.model.dto.UserData;
 import com.expull.tfa.core.protocol.model.manager.LidManager;
 import com.expull.tfa.core.protocol.model.manager.PcidManager;
 import com.expull.tfa.core.protocol.model.manager.UserManager;
-import com.expull.tfa.core.protocol.model.dto.LidData;
-import com.expull.tfa.core.protocol.model.dto.UserData;
-import com.integration_test.protocol.ProtocolIT;
 
-public class TestDataIT extends ProtocolIT{
+public class TestDataIT{
 	private UserManager dataManager;
 	private PcidManager daPcidManager;
 	private LidManager lidManager;
