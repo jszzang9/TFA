@@ -16,7 +16,7 @@ public class TestDataIT{
 	private PcidManager daPcidManager;
 	private LidManager lidManager;
 	
-	@Test
+	@Test @Ignore
 	public void updata() {
 		try {
 			dataManager = new UserManager();
