@@ -14,22 +14,22 @@ div {
     width:100%;
     height:100%;
     background-image:url("./img/e_intro_bg.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #intro-progress-area {
-    width:67%;
-    height:3%;
-    top:60.3%;
-    left: 17.3%;
+    width:64.5%;
+    height:1.9%;
+    top:50.6%;
+    left: 18%;
 }
 
 #intro-progress-bar {
     width:0px;
-    height:3%;
-    top:60.3%;
-    left: 17.3%;
-    background-size: cover;
+    height:1.9%;
+    top:50.6%;
+    left: 18%;
+    background-size: 100% 100%;
     background-image:url("./img/e_intro_90.png");
     margin:0px;
     padding:0px;
@@ -43,42 +43,42 @@ div {
     width:100%;
     height:100%;
     background-image:url("./img/e_main_bg.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #main-lock {
     width:26%;
     height:20%;
-    top:77%;
+    top:65%;
     left:37%;
     background-image:url("./img/e_main_lock.png");
-    background-size: cover;
+    background-size: 100% 100%;
 
 }
 
 #main-unlock {
     width:30.5%;
-    height:20.8%;
-    top:77%;
+    height:20.45%;
+    top:64.6%;
     left:36.9%;
     background-image:url("./img/e_main_unlock.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #main-on {
     width:82%;
-    height:48%;
-    top:27.5%;
+    height:40%;
+    top:23%;
     left: 9%;
     background-image:url("./img/e_main_on.png");
-    background-size: cover;
+    background-size: 100% 100%;
 }
 
 #main-info1 {
     width:40%;
     left: 30%;
-    height:10%;
-    top:45%;
+    height:8%;
+    top:38%;
     text-align:center;
     font-family: "AppleSDGothicNeo ExtraBold";
     font-weight: bolder;
@@ -89,8 +89,8 @@ div {
 #main-info2 {
     width:40%;
     left: 30%;
-    height:10%;
-    top:45%;
+    height:8%;
+    top:54%;
     text-align:center;
     font-family: "AppleSDGothicNeo ExtraBold";
     font-weight: bolder;
