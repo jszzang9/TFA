@@ -9,4 +9,6 @@
     <string name="msg_failed_to_connect_tfa">Failed to connect TFA</string>
     <string name="msg_failed_to_send_request">Failed to send request</string>
     
+   	<string name="app_host">http://ec000.expull.com</string>
+    <string name="app_home">/sites/tfa/mobile.html</string>
 </resources>

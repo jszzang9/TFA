@@ -30,8 +30,8 @@ function TFA_MOBILE() {
 
 	buildDOM(elements, $("body"));
 	var tfa = this;
-	$("#main-unlock").bind("tap", function(event, ui) { tfa.lock();});
-	$("#main-lock").bind("tap", function(event, ui) { tfa.unlock();});
+	$("#main-unlock").bind("touchstart", function(event, ui) { tfa.lock();});
+	$("#main-lock").bind("touchstart", function(event, ui) { tfa.unlock();});
     };
 
     this.playIntro = function() {
