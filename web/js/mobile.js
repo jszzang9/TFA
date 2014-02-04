@@ -1,7 +1,15 @@
 function TFA_MOBILE() {
     this.start = function() {
+	this.init();
 	this.initUI();
 	this.playIntro();
+	this.off();
+	this.unlock();
+    };
+
+    this.init = function() {
+	this.info1 = "";
+	this.info2 = "";
     };
 
     this.initUI = function() {
@@ -12,15 +20,18 @@ function TFA_MOBILE() {
 		"intro-progress-bar"]},
 	    {"main-frame":[
 		"main-background",
-		"main-lock",
 		"main-on",
 		"main-unlock",
+		"main-lock",
 		"main-info1",
 		"main-info2"
 	    ]},
 	];
 
 	buildDOM(elements, $("body"));
+	var tfa = this;
+	$("#main-unlock").bind("tap", function(event, ui) { tfa.lock();});
+	$("#main-lock").bind("tap", function(event, ui) { tfa.unlock();});
     };
 
     this.playIntro = function() {
@@ -30,12 +41,35 @@ function TFA_MOBILE() {
 	b.animate({width:a.width()}, 1000, function() { tfa.showMain()});
 	
     };
+
     this.showMain = function() {
 	$("#main-frame").hide();
 	$("#main-frame").css("visibility", "visible");
 	$("#main-frame").show();
+
+	this.refreshInfo();
     };
 
+    this.setInfo = function(one, two) {
+	$("#main-info1").contents().remove();
+	$("#main-info2").contents().remove();
+	$("#main-info1").append(one);
+	$("#main-info2").append(two);
+    };
+
+    this.refreshInfo = function() {
+	this.setInfo(this.info1, this.info2);
+    };
+
+    this.on = function() {$("#main-on").show();  };
+    this.off = function() {$("#main-on").hide();  };
+
+    this.lock = function() {
+	$("#main-lock").show();$("#main-unlock").hide();
+    };
+    this.unlock = function() {
+	$("#main-lock").hide();$("#main-unlock").show();
+    };
 }
 
 $(document).ready(function() {
