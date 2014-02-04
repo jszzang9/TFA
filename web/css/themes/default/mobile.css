@@ -1,0 +1,99 @@
+body {
+    margin:0px;
+}
+
+div {
+    position:absolute;  
+}
+
+#intro-frame {
+    width:100%;    height:100%;
+}
+
+#intro-background {
+    width:100%;
+    height:100%;
+    background-image:url("./img/e_intro_bg.png");
+    background-size: cover;
+}
+
+#intro-progress-area {
+    width:67%;
+    height:3%;
+    top:60.3%;
+    left: 17.3%;
+}
+
+#intro-progress-bar {
+    width:0px;
+    height:3%;
+    top:60.3%;
+    left: 17.3%;
+    background-size: cover;
+    background-image:url("./img/e_intro_90.png");
+    margin:0px;
+    padding:0px;
+}
+
+#main-frame {
+    width:100%;    height:100%;
+    visibility:hidden;
+}
+#main-background {
+    width:100%;
+    height:100%;
+    background-image:url("./img/e_main_bg.png");
+    background-size: cover;
+}
+
+#main-lock {
+    width:26%;
+    height:20%;
+    top:77%;
+    left:37%;
+    background-image:url("./img/e_main_lock.png");
+    background-size: cover;
+
+}
+
+#main-unlock {
+    width:30.5%;
+    height:20.8%;
+    top:77%;
+    left:36.9%;
+    background-image:url("./img/e_main_unlock.png");
+    background-size: cover;
+}
+
+#main-on {
+    width:82%;
+    height:48%;
+    top:27.5%;
+    left: 9%;
+    background-image:url("./img/e_main_on.png");
+    background-size: cover;
+}
+
+#main-info1 {
+    width:40%;
+    left: 30%;
+    height:10%;
+    top:45%;
+    text-align:center;
+    font-family: "AppleSDGothicNeo ExtraBold";
+    font-weight: bolder;
+    font-size: 72px;
+    color: #189aff;
+}
+
+#main-info2 {
+    width:40%;
+    left: 30%;
+    height:10%;
+    top:45%;
+    text-align:center;
+    font-family: "AppleSDGothicNeo ExtraBold";
+    font-weight: bolder;
+    font-size: 72px;
+    color: #189aff;
+}
