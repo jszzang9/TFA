@@ -9,6 +9,7 @@
 	<script>
 $(document).ready(function() {
 	tfa.sessionRequired = false;
+	$("#RegistPCArea").hide();
 });
 	</script>
   </head>
@@ -18,7 +19,7 @@ $(document).ready(function() {
     <div class="container">
 
       <form class="form-signin" role="form">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading">사내 보안시스템<br>관리자 로그인</h2>
         <input type="text" class="form-control" placeholder="Email address" required autofocus id="txtUID">
         <input type="password" id="txtPW" class="form-control" placeholder="Password" required>
         <input type="button" class="btn btn-lg btn-primary btn-block" onClick="tfa.requestAuth()" value="Sign in"/>
