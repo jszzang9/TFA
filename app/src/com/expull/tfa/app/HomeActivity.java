@@ -10,19 +10,27 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.io.Reader;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.bluetooth.BluetoothAdapter;
+import android.bluetooth.BluetoothDevice;
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
 import android.os.Environment;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
 import android.view.Window;
+import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebSettings.RenderPriority;
@@ -34,6 +42,10 @@ import android.webkit.WebViewClient;
 public class HomeActivity extends Activity{
 	private WebView mWebView;
 	private String gcm_key;
+	private String callbackForDiscoveryBluetooth;
+	private BluetoothAdapter mBluetoothAdapter;
+	private final ArrayList<String> mArrayAdapter = new ArrayList<String>();
+
 
 	@Override
     public void onCreate(Bundle savedInstanceState){
@@ -54,6 +66,7 @@ public class HomeActivity extends Activity{
         mWebView.getSettings().setJavaScriptEnabled(true);
         mWebView.getSettings().setDomStorageEnabled(true);
         mWebView.addJavascriptInterface(new Object() {
+        	@JavascriptInterface
         	public String readFile(String path) {
         		String result = "";
     			try {
@@ -66,8 +79,9 @@ public class HomeActivity extends Activity{
     			return result;
         	}
         	
+        	@JavascriptInterface
         	public String get(String key) {
-				String dirPath = Environment.getDataDirectory() + "/data/com.expull.ebpp.smartstb";
+				String dirPath = Environment.getDataDirectory() + "/data/com.expull.tfa";
 				String filename = "/map.txt";
 
     			HashMap<String,String> keyMap = new HashMap<String,String>();
@@ -91,8 +105,9 @@ public class HomeActivity extends Activity{
     			return value;
         	}
 
+        	@JavascriptInterface
         	public void put(String key, String value){
-        		String mSdPath = Environment.getDataDirectory() + "/data/com.expull.ebpp.smartstb";
+        		String mSdPath = Environment.getDataDirectory() + "/data/com.expull.tfa";
 				String filename = "/map.txt";
 
 				File file = new File(mSdPath);
@@ -117,12 +132,24 @@ public class HomeActivity extends Activity{
 				}
         	}
         	
+        	@JavascriptInterface
         	public void finish(){
         		appfinish();
         	}
 
+        	@JavascriptInterface
         	public String getGcmKey(){
         		return gcm_key;
+        	}
+        	
+        	@JavascriptInterface
+        	public String discoveryBluetooth(String callback) {
+        		return HomeActivity.this.discoveryBluetooth(callback);
+        	}
+        	
+        	@JavascriptInterface
+        	public String queryMacAddress() {
+        		return "";
         	}
         }, "PLATFORM");
 		
@@ -153,8 +180,43 @@ public class HomeActivity extends Activity{
 			};
 		});
 
+        initBTReceiver();
 	}
 
+	private String discoveryBluetooth(String callback) {
+		this.callbackForDiscoveryBluetooth = callback;
+		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
+			return "";
+		}
+		
+		if(!mBluetoothAdapter.isDiscovering())
+			mBluetoothAdapter.startDiscovery(); 
+		return "";
+	}
+	
+	private void invokeBluetoothCallbackWith(String string) {
+		String script = callbackForDiscoveryBluetooth+"("+string+")";
+		mWebView.loadUrl("javascript:"+script);
+	}
+
+	private void initBTReceiver() {
+		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
+		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+	}
+
+	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
+	    @Override
+		public void onReceive(Context context, Intent intent) {
+	        String action = intent.getAction();
+	        if (BluetoothDevice.ACTION_FOUND.equals(action)) {
+	            BluetoothDevice device = intent.getParcelableExtra(BluetoothDevice.EXTRA_DEVICE);
+	            String obj = "{name:\""+device.getName()+"\", mac:\""+device.getAddress()+"\"}";
+	            invokeBluetoothCallbackWith(obj);
+	        }
+	    }
+	};
+	
 	@Override
     public boolean onKeyDown(int keyCode, KeyEvent event) {
 		toast("["+keyCode+"]");
