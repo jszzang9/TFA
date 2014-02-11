@@ -19,13 +19,17 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
+import android.bluetooth.BluetoothManager;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Environment;
+import android.os.Handler;
+import android.telephony.TelephonyManager;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnKeyListener;
@@ -33,10 +37,9 @@ import android.view.Window;
 import android.webkit.JavascriptInterface;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
-import android.webkit.WebSettings.RenderPriority;
-import android.webkit.WebSettings.ZoomDensity;
 import android.webkit.WebView;
 import android.webkit.WebViewClient;
+import android.widget.Toast;
 
 @SuppressLint("JavascriptInterface")
 public class HomeActivity extends Activity{
@@ -81,7 +84,7 @@ public class HomeActivity extends Activity{
         	
         	@JavascriptInterface
         	public String get(String key) {
-				String dirPath = Environment.getDataDirectory() + "/data/com.expull.tfa";
+				String dirPath = Environment.getDataDirectory() + "/data/com.expull.tfa.app";
 				String filename = "/map.txt";
 
     			HashMap<String,String> keyMap = new HashMap<String,String>();
@@ -107,7 +110,7 @@ public class HomeActivity extends Activity{
 
         	@JavascriptInterface
         	public void put(String key, String value){
-        		String mSdPath = Environment.getDataDirectory() + "/data/com.expull.tfa";
+        		String mSdPath = Environment.getDataDirectory() + "/data/com.expull.tfa.app";
 				String filename = "/map.txt";
 
 				File file = new File(mSdPath);
@@ -126,6 +129,7 @@ public class HomeActivity extends Activity{
 					ObjectOutputStream fos = new ObjectOutputStream(f);
 					fos.writeObject(keyMap);
 					fos.flush();
+					fos.close();
 				}
 				catch(IOException e){
 					e.printStackTrace();
@@ -148,17 +152,26 @@ public class HomeActivity extends Activity{
         	}
         	
         	@JavascriptInterface
+        	public String discoveryBluetoothLE(String callback) {
+        		return HomeActivity.this.discoveryBluetoothLE(callback);        		
+        	}
+        	
+        	@JavascriptInterface
         	public String queryMacAddress() {
         		return "";
         	}
+        	
+        	@JavascriptInterface
+        	public String extractTelno() {
+        		TelephonyManager mgr = (TelephonyManager)getSystemService(Context.TELEPHONY_SERVICE);
+        		return mgr.getLine1Number();
+        	}
+        	
         }, "PLATFORM");
 		
         mWebView.getSettings().setUseWideViewPort(false);
         mWebView.setInitialScale(1);
-        mWebView.getSettings().setDefaultZoom(ZoomDensity.FAR);
-        mWebView.getSettings().setRenderPriority(RenderPriority.HIGH);
         mWebView.getSettings().setCacheMode(WebSettings.LOAD_NO_CACHE);
-        mWebView.loadUrl(getString(R.string.app_host)+getString(R.string.app_home));
         mWebView.setWebViewClient(new WebViewClientClass());
         mWebView.setWebChromeClient(new WebChromeClient() {
 			@Override
@@ -183,12 +196,39 @@ public class HomeActivity extends Activity{
         initBTReceiver();
 	}
 
+	protected String discoveryBluetoothLE(String callback) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+    private boolean mScanning;
+    private Handler mHandler;
+    private static final long SCAN_PERIOD = 10000;
+    /*
+    private LeDeviceListAdapter mLeDeviceListAdapter;
+    
+    private void scanLeDevice(final boolean enable) {
+        if (enable) {
+            // Stops scanning after a pre-defined scan period.
+            mHandler.postDelayed(new Runnable() {
+                @Override
+                public void run() {
+                    mScanning = false;
+                    mBluetoothAdapter.stopLeScan(mLeScanCallback);
+                }
+            }, SCAN_PERIOD);
+
+            mScanning = true;
+            mBluetoothAdapter.startLeScan(mLeScanCallback);
+        } else {
+            mScanning = false;
+            mBluetoothAdapter.stopLeScan(mLeScanCallback);
+        }
+    }
+    */
 	private String discoveryBluetooth(String callback) {
 		this.callbackForDiscoveryBluetooth = callback;
-		mBluetoothAdapter = BluetoothAdapter.getDefaultAdapter();
-		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) {
-			return "";
-		}
+		if (mBluetoothAdapter == null || !mBluetoothAdapter.isEnabled()) return "";
 		
 		if(!mBluetoothAdapter.isDiscovering())
 			mBluetoothAdapter.startDiscovery(); 
@@ -203,8 +243,21 @@ public class HomeActivity extends Activity{
 	private void initBTReceiver() {
 		IntentFilter filter = new IntentFilter(BluetoothDevice.ACTION_FOUND);
 		registerReceiver(mReceiver, filter); // Don't forget to unregister during onDestroy
+		if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
+		    Toast.makeText(this, "BLE is not supported", Toast.LENGTH_SHORT).show();
+		    finish();
+		}
+		
+		final BluetoothManager bluetoothManager =
+		        (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+		mBluetoothAdapter = bluetoothManager.getAdapter();
 	}
 
+	@Override
+	protected void onDestroy() {
+		unregisterReceiver(mReceiver);
+	}
+	
 	private final BroadcastReceiver mReceiver = new BroadcastReceiver() {
 	    @Override
 		public void onReceive(Context context, Intent intent) {
@@ -227,6 +280,12 @@ public class HomeActivity extends Activity{
         }
         return super.onKeyDown(keyCode, event);
     }
+	
+	@Override
+	public void onResume() {
+		super.onResume();
+        mWebView.loadUrl(getString(R.string.app_host)+getString(R.string.app_home));
+	}
 	
 	private void toast(String string) {
 //		Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
@@ -271,11 +330,6 @@ public class HomeActivity extends Activity{
     	});
     	AlertDialog alert = alert_confirm.create();
     	alert.show();
-	}
-
-	@Override
-	public void onPause() {
-		System.exit(0);
 	}
 
 	private static String readAllFromReader(Reader reader) throws IOException {

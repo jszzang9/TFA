@@ -12,7 +12,7 @@ function TFA_MOBILE() {
     this.init = function() {
 	this.info1 = "";
 	this.info2 = "";
-	this.pid = "01030101710";
+	this.pid = "";
     };
 
     this.initUI = function() {
@@ -80,24 +80,19 @@ function TFA_MOBILE() {
 	this.startDiscovery = function() {
 		var tfa = this;
 		tfa.loopDiscovery();
-//		setTimeout(function() { tfa.loopCheckConnectivity(); }, 2000);
 	};
 
 	this.loopDiscovery = function() {
 		var tfa = this;
 		tfa.flagDiscovered = false;
 		tfa.discoveryBluetooth();
-		//setTimeout(function() { tfa.checkConnectivity(); }, 2900);
-		//setTimeout(function() { tfa.loopDiscovery(); }, 3000);
-//		setTimeout(function() { tfa.checkConnectivity(); tfa.loopDiscovery(); }, 5000);
 	};
 
 	this.checkConnectivity = function() {
 		var tfa = this;
 		if(!tfa.flagDiscovered) {
-//			tfa.setInfo("none", "");
+
 		}
-//		setTimeout(function() { tfa.loopCheckConnectivity(); }, 3000);
 	};
 
 	this.discoveryBluetooth = function() {
@@ -105,7 +100,7 @@ function TFA_MOBILE() {
 	};
 
 	this.onDiscoverdBluetooth = function(obj) {
-		if(typeof(obj) == "undefined" || obj == null || typeof(obj.name) == "undefined" || obj.name != "Themis" )  {
+		if(typeof(obj) == "undefined" || obj == null || typeof(obj.name) == "undefined" )  {
 			if(this.info1 == "Bluetooth") { this.setInfo("none",""); }
 			return;
 		}

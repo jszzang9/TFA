@@ -136,4 +136,8 @@ public class SessionController {
 			AgentTcpServerHandler.writeToChannel(ch, json);
 		}
 	}
+	
+	public String findLidByMac(String string) {
+		return TempManager.getInstance().getLidByMac(string);
+	}
 }

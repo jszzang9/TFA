@@ -58,6 +58,14 @@ public class UrlProtocols {
 		SessionController.getInstance().expireSession(json.getString("pid"));
 		return makeBody("result", "0000"," request", json.toString());
 	}
+	
+	public String discoverBluetooth(HttpRequest request, String content) {
+		JSONObject json = JSONObject
+				.fromObject(convertKeyValuePairToJSON(content));
+		String lid = SessionController.getInstance().findLidByMac(json.getString("mac"));
+		if(lid == null || lid.length() == 0) return makeBody("result", "9999");
+		return makeBody("result", "0000", "lid", lid);
+	}
 
 	/**
 	 * Key/Value 쌍으로 된 내용을 Json 형식으로 변환한다.
