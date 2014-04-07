@@ -2,9 +2,11 @@ package com.expull.tfa.core.protocol.model;
 
 import com.expull.tfa.core.protocol.HibernateUtil;
 import com.expull.tfa.core.protocol.model.dto.LidData;
+import com.expull.tfa.core.protocol.model.dto.MasterData;
 import com.expull.tfa.core.protocol.model.dto.PcidData;
 import com.expull.tfa.core.protocol.model.dto.UserData;
 import com.expull.tfa.core.protocol.model.manager.LidManager;
+import com.expull.tfa.core.protocol.model.manager.MasterManager;
 import com.expull.tfa.core.protocol.model.manager.PcidManager;
 import com.expull.tfa.core.protocol.model.manager.UserManager;
 
@@ -82,5 +84,46 @@ public class TempManager {
 		}
 		
 		return pcids;
+	}
+	
+	public MasterData[] getMasters() {
+		MasterManager manager;
+		MasterData[] masters = null;
+		try {
+			manager = new MasterManager();
+			masters= manager.getMasters();
+		}
+		catch(Throwable ex) {
+			ex.printStackTrace();
+		}
+		
+		return masters;
+	}
+
+	public MasterData getMasterForUid(String uid) {
+		MasterManager manager;
+		MasterData[] masters = null;
+		try {
+			manager = new MasterManager();
+			HibernateUtil.beginTransaction();
+			
+			masters= manager.getMastersForUserid(uid);
+			HibernateUtil.commit();
+			HibernateUtil.closeSession();
+		}
+		catch(Throwable ex) {
+			ex.printStackTrace();
+			HibernateUtil.rollBack();
+		}
+		
+		return masters.length>0?masters[0]:null;
+	}
+
+	public void createMasterWitTokenAndContact(String token, String contact) {
+		MasterManager manager = new MasterManager();
+		MasterData master = new MasterData();
+		master.setToken(token);
+		master.setContact(contact);
+		manager.put(master);
 	}
 }

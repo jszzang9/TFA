@@ -75,6 +75,6 @@ public class ProtocolCommon {
 	 * pid, lid 를 받아 채널 id 를 생성한다.
 	 * */
 	public static String buildChannelIDFor(String pid, String lid) {
-		return pid+"@"+lid;
+		return (pid+"@"+lid).trim();
 	}
 }

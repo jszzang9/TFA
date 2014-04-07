@@ -1,5 +1,10 @@
 package com.expull.tfa.core.agent_was.protocol;
 
+import java.io.BufferedReader;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.IOException;
+import java.io.Reader;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -21,6 +26,8 @@ import com.expull.tfa.util.QueuedLogger.QueuedLogger;
  * @author delta829
  */
 public class UrlProtocols {
+	private static final String PATH_WEBROOT = "/Users/shining/Desktop/TFA/src/main/resources/webroot";
+
 	public static String makeBody(String ... keyvalues) {
 		Map<String, String> bodyMap = new HashMap<String, String>();
 		for (int i = 0; i < keyvalues.length; i += 2)
@@ -30,25 +37,70 @@ public class UrlProtocols {
 	}
     
 
-	public String framecontent(HttpRequest request, String content) {
+	public String framecontent(HttpRequest request, String content) {	
 		return "<html>"                                                                                                
 				+"<head> "
-				+"<script src=\"http://code.jquery.com/jquery.min.js\"></script> "
+				+"<meta http-equiv=\"Content-type\" content=\"text/html;charset=UTF-8\"><script src=\"http://code.jquery.com/jquery.min.js\"></script> "
 				+ "<script src=\"http://ec000.expull.com/sites/tfa/js/frame-ws.js\"></script> </head>"               
 				+"<body> </body></html>";
+	}
+	
+	private static String readAllFromReader(Reader reader) throws IOException {
+		String result = "";
+		BufferedReader bufferedReader = new BufferedReader(reader);
+		String line = null;
+		while ((line = bufferedReader.readLine()) != null) {
+			result += line + "\n";
+		}
+		reader.close();
+		return result;
+	}
+	
+	public String admin(HttpRequest request, String content) {
+		String result = "";
+		String path = request.getUri().replace("/admin/", "");
+		try {
+			result = readAllFromReader(new FileReader(PATH_WEBROOT+"/"+path));
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	public String loadMaster(HttpRequest request, String content) {
+		JSONObject json = new JSONObject();
+		JSONObject management = new JSONObject();
+		JSONObject masters = SessionController.getInstance().loadMasters();
+		management.put("list", masters.get("list"));
+		json.put("management", management);
+		return json.toString();
 	}
 	
 	public String auth(HttpRequest request, String content) {
 		JSONObject json = JSONObject
 				.fromObject(convertKeyValuePairToJSON(content));
+		/*
 		return makeBody("result", SessionController.getInstance().findConnection(json),
+				"request", json.toString());
+*/
+		return makeBody("result", SessionController.getInstance().isConnected(json),
 				"request", json.toString());
 	}
 
+	public String createMaster(HttpRequest request, String content) {
+		JSONObject json = JSONObject
+				.fromObject(convertKeyValuePairToJSON(content));
+		return makeBody("result", SessionController.getInstance().registToken(json));
+	}
+	
 	public String bindphone(HttpRequest request, String content) {
 		JSONObject json = JSONObject
 				.fromObject(convertKeyValuePairToJSON(content));
-		SessionController.getInstance().bindPhone(null, json.getString("pid"), json.getString("mac"));
+		SessionController.getInstance().bindPhone(null, json.getString("pid"), json.getString("lid"));
 		return makeBody("result", "0000"," request", json.toString());
 	}
 	

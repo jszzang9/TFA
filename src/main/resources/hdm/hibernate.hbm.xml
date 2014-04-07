@@ -1,19 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd" >
 <hibernate-mapping>
-	<class name="com.expull.tfa.core.protocol.model.dto.UserData" table="USER_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.MasterData"
+		table="MASTER_TABLE">
+		<id name="token" type="string">
+			<column name="TOKEN" />
+		</id>
+		<property name="userid" column="USERID" type="string" />
+		<property name="contact" column="CONTACT" type="string" />
+		<property name="auth" column="AUTH" type="string" />
+		<property name="exception" column="EXCEPTION" type="string" />
+		<property name="approval" column="APPROVAL" type="string" />
+		<property name="pc" column="PC" type="string" />
+		<property name="pc_limit" column="PC_LIMIT" type="string" />
+		<property name="location" column="LOCATION" type="string" />
+		<property name="location_limit" column="LOCATION_LIMIT" type="string" />
+		<property name="status" column="STATUS" type="string" />
+	</class>
+	<class name="com.expull.tfa.core.protocol.model.dto.UserData"
+		table="USER_TABLE">
 		<id name="uid" type="string">
 			<column name="UID" />
 		</id>
 		<property name="pid" column="PID" type="string" />
 	</class>
-	<class name="com.expull.tfa.core.protocol.model.dto.PcidData" table="PCID_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.PcidData"
+		table="PCID_TABLE">
 		<id name="pcid" type="string">
 			<column name="PCID" />
 		</id>
 		<property name="lid" column="LID" type="string" />
 	</class>
-	<class name="com.expull.tfa.core.protocol.model.dto.LidData" table="LOCATION_TABLE">
+	<class name="com.expull.tfa.core.protocol.model.dto.LidData"
+		table="LOCATION_TABLE">
 		<id name="mac" type="string">
 			<column name="MAC" />
 		</id>

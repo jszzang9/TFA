@@ -1,0 +1,44 @@
+{
+    settings:{
+	sites:[
+	    "infra.expull.com",
+	    "test001.expull.com",
+	    "test002.expull.com",
+	    "test003.expull.com",
+	    "test004.expull.com"
+	]
+    },
+    management:{
+	search:{
+	    key:"userid", value:"291029"
+	},
+	paging:{
+	    "total-contents":130,
+	    "pages-per-screen":5,
+	    "current-page":2,
+	    "page-size":20
+	},
+	list:[
+	    {status:"connected", token:"asdf1234", userid:"291029",contact:"010-0000-0000",auth:"push",exception:"1396448124587",approval:"1396448124587",pc:"PC0001","pc_limit":true,location:"익스풀본사","location_limit":true,sites:["infra.expull.com","test001.expull.com","test003.expull.com"]},
+	    {status:"disconnected", token:"asdf1234", userid:"291029",contact:"010-0000-0000",auth:"push",exception:"1396448124587",approval:"1396448124587",pc:"PC0001","pc-limit":true,location:"익스풀본사","location-limit":true,sites:["infra.expull.com","test001.expull.com","test003.expull.com"]},
+	]
+    },
+    logs:{
+	search:{
+	    key:"userid", value:"291029"
+	},
+	paging:{
+	    "total-contents":130,
+	    "pages-per-screen":5,
+	    "current-page":2,
+	    "page-size":20,
+	},
+	list:[
+	    {time:1396448124587,userid:"291029",contact:"010-0000-0000",site:"infra.expull.com",location:"익스풀본사",pc:"PC0001",memo:"로그인"},
+	    {time:1396448124587,userid:"291029",contact:"010-0000-0000",site:"infra.expull.com",location:"익스풀본사",pc:"PC0001",memo:"로그인"},
+	    {time:1396448124587,userid:"291029",contact:"010-0000-0000",site:"infra.expull.com",location:"익스풀본사",pc:"PC0001",memo:"로그인"},
+	    {time:1396448124587,userid:"291029",contact:"010-0000-0000",site:"infra.expull.com",location:"익스풀본사",pc:"PC0001",memo:"로그인"},
+	    {time:1396448124587,userid:"291029",contact:"010-0000-0000",site:"infra.expull.com",location:"익스풀본사",pc:"PC0001",memo:"로그인"},
+	]
+    }
+}

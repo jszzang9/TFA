@@ -36,6 +36,7 @@ public class ChannelChannelIdBinder {
 	 * @param channelId Packet ID.
 	 */
 	public void bind(Channel channel, String channelId) {
+		channelId = channelId.trim();
 		channelMap.put(channel, channelId);
 		channelIdMap.put(channelId, channel);
 	}
@@ -60,6 +61,7 @@ public class ChannelChannelIdBinder {
 	 * @param channelId Packet ID.
 	 */
 	public void unbind(String channelId) {
+		channelId = channelId.trim();
 		if(!channelIdMap.containsKey(channelId)) return;
 		Channel channel = channelIdMap.get(channelId);
 		if (channel != null) channelMap.remove(channel);
@@ -73,6 +75,7 @@ public class ChannelChannelIdBinder {
 	 * @return 채널. 없으면 null.
 	 */
 	public Channel getChannelByChannelId(String chanelId) {
+		chanelId = chanelId.trim();
 		return channelIdMap.get(chanelId);
 	}
 	
@@ -93,6 +96,7 @@ public class ChannelChannelIdBinder {
 	 * @return 묶여있는지 여부.
 	 */
 	public boolean isBind(String channelId) {
+		channelId = channelId.trim();
 		return channelIdMap.containsKey(channelId);
 	}
 	
@@ -110,6 +114,7 @@ public class ChannelChannelIdBinder {
 	}
 
 	public String findChannelIdStartsWith(String pid) {
+		pid = pid.trim();
 		for(String key : channelIdMap.keySet()) {
 			if(key.startsWith(pid)) return key;
 		}

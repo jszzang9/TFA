@@ -1,5 +1,6 @@
 package com.expull.tfa.control;
 
+import net.sf.json.JSONArray;
 import net.sf.json.JSONObject;
 
 import org.jboss.netty.channel.Channel;
@@ -8,6 +9,7 @@ import com.expull.tfa.common.ProtocolCommon;
 import com.expull.tfa.core.agnet_tcp.AgentTcpServerHandler;
 import com.expull.tfa.core.binder.ChannelChannelIdBinder;
 import com.expull.tfa.core.protocol.model.TempManager;
+import com.expull.tfa.core.protocol.model.dto.MasterData;
 
 public class SessionController {
 	private static SessionController singleton = new SessionController();
@@ -18,6 +20,7 @@ public class SessionController {
 	private static final String RESULT_UID_REQUIRED = "3100";
 	private static final String RESULT_PCID_REQUIRED = "3200";
 	private static final String RESULT_HAS_NOCONNECTION = "4000";
+	private static final String RESULT_FAIL = "9000";
 	class TFAException extends Exception {
 		private static final long serialVersionUID = -8445293431431833423L;
 		private final String code;
@@ -38,7 +41,8 @@ public class SessionController {
 			
 			String pid = TempManager.getInstance().getPidOf(uid);
 			String lid = TempManager.getInstance().getLidByPcid(pcid);
-			
+
+
 			if(!hasConnectionFor(pid, lid))
 				throw new TFAException(RESULT_HAS_NOCONNECTION);
 		} catch(TFAException e) {
@@ -60,9 +64,8 @@ public class SessionController {
 		ChannelChannelIdBinder.getInstance().unbind(ch);
 	}
 	
-	public String bindPhone(Channel channel, String pid, String mac) {
+	public String bindPhone(Channel channel, String pid, String lid) {
 		String json = "{func:\"detectPhone\", arg:\"{pid:\\\""+pid+"\\\"}\"}";
-		String lid = TempManager.getInstance().getLidByMac(mac);
 		String channelId = ProtocolCommon.buildChannelIDFor(pid, lid);
 
 		if(!unbindLastLocation(pid, lid)) return channelId;
@@ -139,5 +142,56 @@ public class SessionController {
 	
 	public String findLidByMac(String string) {
 		return TempManager.getInstance().getLidByMac(string);
+	}
+	
+	public JSONObject loadMasters() {
+		JSONObject result = new JSONObject();
+		JSONArray array = new JSONArray();
+		
+		MasterData[] masters = TempManager.getInstance().getMasters();
+		for(int i=0;masters!=null && i<masters.length;i++) {
+			MasterData master = masters[i];
+			JSONObject obj = new JSONObject();
+			obj.put("token", master.getToken());
+			obj.put("userid", master.getUserid());
+			obj.put("contact", master.getContact());
+			obj.put("auth", master.getAuth());
+			obj.put("exception", master.getException());
+			obj.put("approval", master.getApproval());
+			obj.put("pc", master.getPc());
+			obj.put("pc_limin", master.getPc_limit());
+			obj.put("location", master.getLocation());
+			obj.put("location_limit", master.getLocation_limit());
+			obj.put("status", master.getStatus());
+			array.add(obj);
+		}
+		result.put("list", array);
+
+		return result;
+	}
+	public String isConnected(JSONObject json) {
+		String resultCode = RESULT_SUCCESS;
+		try {
+			if(!json.has("uid")) throw new TFAException(RESULT_UID_REQUIRED);
+			if(!json.has("pcid")) throw new TFAException(RESULT_PCID_REQUIRED);
+
+			String uid = json.getString("uid");
+			String pcid = json.getString("pcid");
+
+//			String pid = TempManager.getInstance().getPidOf(uid);
+//			String lid = TempManager.getInstance().getLidByPcid(pcid);
+
+			MasterData master = TempManager.getInstance().getMasterForUid(uid);
+			resultCode = master.getStatus();
+		} catch(TFAException e) {
+			resultCode = e.getCode();
+		}
+		return resultCode;
+	}
+	public String registToken(JSONObject json) {
+		String token = json.getString("token");
+		String contact = json.getString("contact");
+		TempManager.getInstance().createMasterWitTokenAndContact(token, contact);
+		return RESULT_SUCCESS;
 	}
 }
